@@ -1,0 +1,81 @@
+* {
+  margin: 0;
+  padding: 0;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  scroll-behavior: smooth;
+}
+
+.leftbar {
+  margin: 4rem 0.2rem 0rem 0.2rem;
+  height: 100%;
+}
+
+.leftbar img {
+  width: 90%;
+  border-radius: 50%;
+  -webkit-box-shadow: 0 0 10px #000;
+          box-shadow: 0 0 10px #000;
+}
+
+.sidelist {
+  margin-top: 50%;
+}
+
+.sidelist li {
+  list-style: none;
+  padding: 5px 0;
+  font-size: 1.2rem;
+}
+
+.logout {
+  margin: 15% 0%;
+  text-align: center;
+}
+
+.logout:hover {
+  background-color: #c9c9c9;
+}
+
+.navbar li {
+  padding: 0 15px;
+}
+
+.navname {
+  margin-left: 9rem;
+  border: 1px solid #000;
+  width: 250px;
+  border-radius: 50px;
+}
+
+.navColor {
+  margin: 3px 20px 0px -10px;
+  background-color: #fff;
+  border-bottom-right-radius: 30px;
+}
+
+.table {
+  margin: 20px 10px;
+  width: 40%;
+  border-radius: 30px;
+  background-color: #fff;
+  padding: 2rem;
+  -webkit-box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+          box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+}
+
+.table .block {
+  border-radius: 30px;
+  background-color: #CDDDF7;
+  border: 1px solid #000000;
+}
+
+.table .block img {
+  width: 80%;
+  border-radius: 50%;
+}
+
+.table .block p {
+  padding-left: 20px;
+}
+/*# sourceMappingURL=style.css.map */
