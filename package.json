@@ -1,0 +1,42 @@
+{
+  "name": "kanban-ui",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "webpack-dev-server --config webpack.config.js --open"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Sanchitbajaj02/kanban-ui.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Sanchitbajaj02/kanban-ui/issues"
+  },
+  "homepage": "https://github.com/Sanchitbajaj02/kanban-ui#readme",
+  "dependencies": {
+    "firebase": "^7.22.0",
+    "lodash": "^4.17.20",
+    "materialize-css": "^1.0.0-rc.2",
+    "sortablejs": "^1.12.0",
+    "uuidv4": "^6.2.4"
+  },
+  "devDependencies": {
+    "css-loader": "^4.2.2",
+    "file-loader": "^6.0.0",
+    "html-loader": "^1.3.1",
+    "html-webpack-plugin": "^4.5.0",
+    "mini-css-extract-plugin": "^0.10.0",
+    "sass": "^1.26.10",
+    "sass-loader": "^9.0.3",
+    "style-loader": "^1.2.1",
+    "ts-loader": "^8.0.4",
+    "typescript": "^4.0.3",
+    "webpack": "^4.44.1",
+    "webpack-cli": "^3.3.12",
+    "webpack-dev-server": "^3.11.0"
+  }
+}

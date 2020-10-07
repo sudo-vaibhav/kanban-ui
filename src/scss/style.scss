@@ -1,0 +1,49 @@
+$primary-color: #888fdc;
+$secondary-color: #eef2f9;
+$button-floating-background-hover: $primary-color;
+$button-floating-background: $primary-color;
+@import '../../node_modules/materialize-css/sass/materialize.scss';
+@import 'https://fonts.googleapis.com/icon?family=Material+Icons';
+.page-container {
+  width: 95%;
+  margin: auto;
+}
+
+.mt-5 {
+  margin-top: 1.25rem;
+}
+
+body {
+  background-color: $secondary-color;
+}
+.kanban-heading {
+  margin-top: 2.5rem;
+}
+#kanban-tables-collection {
+  display: flex;
+  overflow-x: auto;
+  padding: 1rem;
+  align-items: start;
+}
+.kanban-table-container {
+  border-radius: 5px;
+  padding: 1rem;
+  margin: 0 1rem !important;
+  min-width: 350px;
+  max-width: 350px;
+}
+.task {
+  .task-text {
+    font-size: 1.25rem;
+  }
+  .priority-wrapper {
+    margin-top: 1rem;
+  }
+  margin: 0.5rem 1rem;
+  width: calc(100% - 2rem);
+  border-radius: 5px;
+}
+
+// .primary {
+//   background: $primary-color;
+// }

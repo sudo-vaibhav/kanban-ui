@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <header>
+      <nav>
+        <div class="nav-wrapper page-container">
+          <a href="#" class="brand-logo">看板</a>
+          <ul id="nav-mobile" class="right hide-on-med-and-down valign-wrapper">
+            <li><span class="material-icons"> notifications </span></li>
+          </ul>
+        </div>
+      </nav>
+    </header>
+    <main>
+      <div class="page-container">
+        <div class="row kanban-heading valign-wrapper">
+          <div class="col s10">
+            <h4 class="row mt-5">
+              Hi There! Welcome to your <span id="project-heading"></span>!
+            </h4>
+          </div>
+          <div class="col s2">
+            <a
+              class="btn-floating btn-large waves-effect waves-light primary fixed-action-btn right"
+              id="add-table"
+              href="#modal1"
+              ><i class="material-icons">add</i></a
+            >
+          </div>
+        </div>
+
+        <div class="row" id="kanban-tables-collection"></div>
+      </div>
+    </main>
+  </body>
+  <div id="modal1" class="modal">
+    <div class="modal-content">
+      <h4>Modal Header</h4>
+      <p>A bunch of text</p>
+    </div>
+    <div class="modal-footer">
+      <a href="#!" class="modal-close waves-effect waves-green btn-flat"
+        >Agree</a
+      >
+    </div>
+  </div>
+</html>
