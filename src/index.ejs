@@ -26,9 +26,9 @@
           </div>
           <div class="col s2">
             <a
-              class="btn-floating btn-large waves-effect waves-light primary fixed-action-btn right"
+              class="btn-floating btn-large waves-effect waves-light primary fixed-action-btn right modal-trigger"
               id="add-table"
-              href="#modal1"
+              href="#add-table-modal"
               ><i class="material-icons">add</i></a
             >
           </div>
@@ -37,16 +37,29 @@
         <div class="row" id="kanban-tables-collection"></div>
       </div>
     </main>
+
+    <form id="add-table-form">
+      <div id="add-table-modal" class="modal bottom-sheet">
+        <div class="modal-content">
+          <h4>Add a Table</h4>
+
+          <div class="row">
+            <div class="input-field col s12 primary">
+              <input
+                placeholder="Ex. Pipe Dream Projects"
+                id="table-name-input"
+                type="text"
+                class="validate"
+              />
+              <label for="table-name-input">New Table Name</label>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn waves-effect primary waves-light">Add</button>
+        </div>
+      </div>
+    </form>
+    <div id="add-table-modals-container"></div>
   </body>
-  <div id="modal1" class="modal">
-    <div class="modal-content">
-      <h4>Modal Header</h4>
-      <p>A bunch of text</p>
-    </div>
-    <div class="modal-footer">
-      <a href="#!" class="modal-close waves-effect waves-green btn-flat"
-        >Agree</a
-      >
-    </div>
-  </div>
 </html>

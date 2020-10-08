@@ -4,6 +4,37 @@ $button-floating-background-hover: $primary-color;
 $button-floating-background: $primary-color;
 @import '../../node_modules/materialize-css/sass/materialize.scss';
 @import 'https://fonts.googleapis.com/icon?family=Material+Icons';
+
+/* label color */
+.input-field label,
+input[type='text']:not(.browser-default):focus:not([readonly]) + label {
+  color: #000;
+}
+/* label focus color */
+.input-field input[type='text']:focus + label {
+  color: #000;
+}
+/* label underline focus color */
+.input-field input[type='text']:focus,
+input[type='text']:not(.browser-default):focus:not([readonly]) {
+  border-bottom: 1px solid #000;
+  box-shadow: 0 1px 0 0 #000;
+}
+/* valid color */
+.input-field input[type='text'].valid {
+  border-bottom: 1px solid #000;
+  box-shadow: 0 1px 0 0 #000;
+}
+/* invalid color */
+.input-field input[type='text'].invalid {
+  border-bottom: 1px solid #000;
+  box-shadow: 0 1px 0 0 #000;
+}
+/* icon prefix focus color */
+.input-field .prefix.active {
+  color: #000;
+}
+
 .page-container {
   width: 95%;
   margin: auto;
@@ -33,6 +64,7 @@ body {
   max-width: 350px;
 }
 .task {
+  cursor: grab;
   .task-text {
     font-size: 1.25rem;
   }
@@ -44,6 +76,16 @@ body {
   border-radius: 5px;
 }
 
+.btn,
+.btn:hover,
+.btn:focus,
+.btn:active {
+  background: $primary-color;
+}
+
+.table-id-text-input {
+  display: none;
+}
 // .primary {
 //   background: $primary-color;
 // }
