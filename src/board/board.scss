@@ -1,9 +1,9 @@
-$primary-color: #888fdc;
-$secondary-color: #eef2f9;
+@import '../scss/colors.scss';
 $button-floating-background-hover: $primary-color;
 $button-floating-background: $primary-color;
 @import '../../node_modules/materialize-css/sass/materialize.scss';
 @import 'https://fonts.googleapis.com/icon?family=Material+Icons';
+@import '../scss/main.scss';
 
 /* label color */
 .input-field label,
@@ -53,13 +53,23 @@ body {
 #kanban-tables-collection {
   display: flex;
   overflow-x: auto;
-  padding: 1rem;
+  //   padding: 1rem;
+  padding: 1rem auto;
   align-items: start;
+  .kanban-table-container {
+    margin: 2rem 2rem;
+  }
+  //   > .kanban-table-container:nth-child(1) {
+  // margin-left: 1.5rem;
+  //   }
+  //   > .kanban-table-container:last-of-type {
+  // margin-right: 7.5rem;
+  //   }
 }
 .kanban-table-container {
   border-radius: 5px;
   padding: 1rem;
-  margin: 0 1rem !important;
+  margin: 0 1rem;
   min-width: 350px;
   max-width: 350px;
 }
@@ -76,16 +86,15 @@ body {
   border-radius: 5px;
 }
 
-.btn,
-.btn:hover,
-.btn:focus,
-.btn:active {
-  background: $primary-color;
-}
-
 .table-id-text-input {
   display: none;
 }
-// .primary {
-//   background: $primary-color;
-// }
+
+.brand-logo {
+  height: 50px;
+  margin: 8px 0;
+  img {
+    height: 100%;
+    width: auto;
+  }
+}

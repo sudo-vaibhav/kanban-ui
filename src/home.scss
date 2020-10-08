@@ -1,0 +1,60 @@
+@import './scss/colors.scss';
+@import '../node_modules/materialize-css/sass/materialize.scss';
+@media only screen and (min-width: 993px) {
+  .container.page-container {
+    width: 85%;
+  }
+}
+#hero {
+  background: $primary-color;
+  min-height: 95vh;
+
+  #kanban-logo {
+    width: 35vw;
+    min-width: 200px;
+    margin: 1.5rem 0;
+  }
+  //   #hero-wrapper {
+  // display: flex;
+  //   }
+}
+
+body,
+html {
+  margin: 0;
+  padding: 0;
+}
+
+#hero-image-container {
+  img {
+    width: 100%;
+    height: auto;
+  }
+}
+
+#hero-links-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  .hero-link-wrapper {
+    display: flex;
+    margin: 0.5rem 0;
+    a {
+      flex: 1;
+      border-radius: 44px;
+      color: black;
+      &.outline {
+        background: transparent;
+        border: 3px solid $secondary-color;
+        color: $secondary-color;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+    }
+  }
+}
+
+#team {
+  text-align: center;
+}

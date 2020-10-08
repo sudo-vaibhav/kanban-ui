@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <header>
+      <nav>
+        <div class="nav-wrapper page-container">
+          <a href="/" class="brand-logo">
+            <img src="/assets/kanban-logo.svg" alt="" />
+          </a>
+          <ul id="nav-mobile" class="right hide-on-med-and-down valign-wrapper">
+            <li><span class="material-icons"> notifications </span></li>
+          </ul>
+        </div>
+      </nav>
+    </header>
+    <main>
+      <div class="page-container">
+        <div class="row kanban-heading valign-wrapper">
+          <div class="col s9">
+            <h4 class="row mt-5">
+              Hi There! Welcome to your <span id="project-heading"></span>!
+            </h4>
+          </div>
+          <div class="col s3">
+            <a
+              class="btn-floating btn-large waves-effect waves-light right modal-trigger"
+              id="add-table"
+              href="#add-table-modal"
+              ><i class="material-icons">add</i></a
+            >
+          </div>
+        </div>
+
+        <div class="row" id="kanban-tables-collection"></div>
+      </div>
+    </main>
+
+    <form id="add-table-form">
+      <div id="add-table-modal" class="modal bottom-sheet">
+        <div class="modal-content">
+          <h4>Add a Table</h4>
+
+          <div class="row">
+            <div class="input-field col s12">
+              <input
+                placeholder="Ex. Pipe Dream Projects"
+                id="table-name-input"
+                type="text"
+                class="validate"
+              />
+              <label for="table-name-input">New Table Name</label>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn waves-effect waves-light">Add</button>
+        </div>
+      </div>
+    </form>
+    <div id="add-table-modals-container"></div>
+    <!-- <div class="row">
+      <div class="col s3 offset-s9"> -->
+    <div id="task-delete-button">
+      <a
+        class="btn-floating btn-large waves-effect waves-light fixed-action-btn right modal-trigger"
+        id="delete-task"
+        style="
+          position: fixed;
+          bottom: 20px;
+          right: calc(2.5vw + 0.75rem);
+          z-index: 999;
+        "
+      >
+        <i class="material-icons right"> delete </i>
+      </a>
+    </div>
+    <!-- </div>
+    </div> -->
+  </body>
+</html>

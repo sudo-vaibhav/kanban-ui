@@ -3,63 +3,101 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>Kanban</title>
   </head>
   <body>
-    <header>
-      <nav>
-        <div class="nav-wrapper page-container">
-          <a href="#" class="brand-logo">看板</a>
-          <ul id="nav-mobile" class="right hide-on-med-and-down valign-wrapper">
-            <li><span class="material-icons"> notifications </span></li>
-          </ul>
+    <section id="hero">
+      <div class="page-container container">
+        <div class="row">
+          <img src="/assets/kanban-logo.svg" id="kanban-logo" alt="" />
         </div>
-      </nav>
-    </header>
-    <main>
-      <div class="page-container">
-        <div class="row kanban-heading valign-wrapper">
-          <div class="col s10">
-            <h4 class="row mt-5">
-              Hi There! Welcome to your <span id="project-heading"></span>!
-            </h4>
+        <div class="row" id="hero-wrapper">
+          <div class="col s12 l7 ml-0" id="hero-image-container">
+            <img src="/assets/kanban-hero.svg" alt="" />
           </div>
-          <div class="col s2">
-            <a
-              class="btn-floating btn-large waves-effect waves-light primary fixed-action-btn right modal-trigger"
-              id="add-table"
-              href="#add-table-modal"
-              ><i class="material-icons">add</i></a
-            >
-          </div>
-        </div>
-
-        <div class="row" id="kanban-tables-collection"></div>
-      </div>
-    </main>
-
-    <form id="add-table-form">
-      <div id="add-table-modal" class="modal bottom-sheet">
-        <div class="modal-content">
-          <h4>Add a Table</h4>
-
-          <div class="row">
-            <div class="input-field col s12 primary">
-              <input
-                placeholder="Ex. Pipe Dream Projects"
-                id="table-name-input"
-                type="text"
-                class="validate"
-              />
-              <label for="table-name-input">New Table Name</label>
+          <div class="col s12 l4 offset-l1" id="hero-links-container">
+            <div class="row">
+              <div class="col s12">
+                <h2 class="white-text mt-0">Project Management Made Simple</h2>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col s12 hero-link-wrapper">
+                <a class="btn-large" href="/board">Start a Board</a>
+              </div>
+              <div class="col s12 hero-link-wrapper valign-wrapper">
+                <a class="btn-large outline" href="#team">Meet the Team</a>
+              </div>
             </div>
           </div>
         </div>
-        <div class="modal-footer">
-          <button class="btn waves-effect primary waves-light">Add</button>
+      </div>
+    </section>
+
+    <section id="team">
+      <svg
+        id="curveDownColor"
+        xmlns="http://www.w3.org/2000/svg"
+        version="1.1"
+        width="100%"
+        height="100"
+        viewBox="0 0 100 100"
+        preserveAspectRatio="none"
+      >
+        <path d="M0 0 C 50 100 80 100 100 0 Z" />
+      </svg>
+
+      <div class="page-container container">
+        <div class="row">
+          <h3>A Project By</h3>
+        </div>
+        <div class="row">
+          <div class="col s12 m3 my-3">
+            <div class="card">
+              <div class="card-image">
+                <img src="/assets/deepesh.jpeg" />
+                <!-- <span class="card-title">Card Title</span> -->
+              </div>
+              <div class="card-content">
+                <h5>Deepesh</h5>
+              </div>
+            </div>
+          </div>
+          <div class="col s12 m3 my-3">
+            <div class="card">
+              <div class="card-image">
+                <img src="/assets/ishita.png" />
+                <!-- <span class="card-title">Card Title</span> -->
+              </div>
+              <div class="card-content">
+                <h5>Ishita</h5>
+              </div>
+            </div>
+          </div>
+          <div class="col s12 m3 my-3">
+            <div class="card">
+              <div class="card-image">
+                <img src="/assets/aditya.jpeg" />
+                <!-- <span class="card-title">Card Title</span> -->
+              </div>
+              <div class="card-content">
+                <h5>Aditya</h5>
+              </div>
+            </div>
+          </div>
+          <div class="col s12 m3 my-3">
+            <div class="card">
+              <div class="card-image">
+                <img src="/assets/vaibhav.jpg" />
+                <!-- <span class="card-title">Card Title</span> -->
+              </div>
+              <div class="card-content">
+                <h5>Vaibhav</h5>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
-    </form>
-    <div id="add-table-modals-container"></div>
+    </section>
   </body>
 </html>

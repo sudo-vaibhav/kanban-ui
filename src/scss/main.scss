@@ -1,0 +1,27 @@
+@import './colors.scss';
+
+// .ml-0 {
+//   margin-left: 0 !important;
+// }
+
+.mt-0 {
+  margin-top: 0 !important;
+}
+
+section::before,
+section::after {
+  position: absolute;
+  content: '';
+  pointer-events: none;
+}
+path {
+  fill: $primary-color;
+  stroke: $primary-color;
+}
+
+a.btn,
+a.btn:hover,
+a.btn:focus,
+a.btn:active {
+  background: $primary-color;
+}
