@@ -45,7 +45,7 @@ const populateTables = (tables) => {
                   return `
                 <div class="col white task" id="${taskKey}">
                     <div class="row priority-wrapper">
-                        <span class="white-text red badge left">Low Priority</span>
+                       <!-- <span class="white-text red badge left">Low Priority</span> -->
 
                     </div>
                     <h6 class="task-text">${tableData.tasks[taskKey].title}</h6>
@@ -136,6 +136,20 @@ projectDoc.onSnapshot((doc) => {
     new Sortable(table, {
       group: 'shared', // set both lists to same group
       animation: 150,
+      onStart: async function () {
+        // document.querySelector('#task-delete-button').style.height = '200px';
+        // document.querySelector('#task-delete-button').style.width = '100vw';
+      },
+      //   setData: function (dataTransfer, dragEl) {
+      //     // Create the clone (with content)
+      //     dragGhost = dragEl.cloneNode(true);
+      //     // Stylize it
+      //     dragGhost.classList.add('hidden-drag-ghost');
+      //     // Place it into the DOM tree
+      //     document.body.appendChild(dragGhost);
+      //     // Set the new stylized "drag image" of the dragged element
+      //     dataTransfer.setDragImage(dragGhost, 0, 0);
+      //   },
       onEnd: async function (/**Event*/ evt) {
         const from = evt.from.getAttribute('id');
         const to = evt.to.getAttribute('id');

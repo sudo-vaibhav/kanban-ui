@@ -2,23 +2,14 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
-  mode: 'development',
   entry: {
     board: './src/board/board.js',
     index: './src/index.js',
     main: './src/main.js',
   },
-  devtool: 'inline-source-map',
+
   module: {
     rules: [
-      {
-        test: /\.scss$/,
-        use: [
-          'style-loader', //3. Inject styles into DOM
-          'css-loader', //2. Turns css into commonjs
-          'sass-loader', //1. Turns sass into css
-        ],
-      },
       {
         test: /\.(svg|png|jpe?g|gif)$/,
         use: {
@@ -31,13 +22,6 @@ module.exports = {
       },
     ],
   },
-  //   resolve: {
-  //     extensions: ['.tsx', '.ts', '.js'],
-  //   },
-  //   output: {
-  //     filename: 'bundle.js',
-  //     path: path.resolve(__dirname, 'dist'),
-  //   },
   plugins: [
     new HtmlWebpackPlugin({
       template: path.join(__dirname, '/src/index.ejs'),
