@@ -8,11 +8,12 @@ $button-floating-background: $primary-color;
 /* label color */
 .input-field label,
 input[type='text']:not(.browser-default):focus:not([readonly]) + label {
-  color: #000;
+  color: #000 !important;
 }
+
 /* label focus color */
 .input-field input[type='text']:focus + label {
-  color: #000;
+  color: #000 !important;
 }
 /* label underline focus color */
 .input-field input[type='text']:focus,
@@ -32,7 +33,7 @@ input[type='text']:not(.browser-default):focus:not([readonly]) {
 }
 /* icon prefix focus color */
 .input-field .prefix.active {
-  color: #000;
+  color: #000 !important;
 }
 
 .page-container {
@@ -74,6 +75,7 @@ body {
   max-width: 350px;
 }
 .task {
+  border-top: 4px solid $primary-color;
   cursor: grab;
   .task-text {
     font-size: 1.25rem;
@@ -113,3 +115,24 @@ body {
 //   visibility: hidden;
 //   display: none;
 // }
+#task-delete-section {
+  text-align: center;
+  opacity: 0;
+  #drag-to-delete-wrapper {
+    background: $primary-color;
+    margin-top: -5px;
+
+    h1 {
+      margin: 0;
+      padding: 2rem;
+      padding-bottom: 8rem;
+      color: white;
+      // margin-bottom: -50px;
+    }
+  }
+}
+
+.toastify {
+  background: $primary-color !important;
+  color: white !important;
+}

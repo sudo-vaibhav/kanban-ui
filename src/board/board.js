@@ -5,9 +5,14 @@ import { uuid } from 'uuidv4';
 import * as firebase from 'firebase/app';
 import 'firebase/firestore';
 import '../assets/kanban-logo.svg';
+import { Modal } from 'materialize-css';
+import Toastify from 'toastify-js';
+import 'toastify-js/src/toastify.css';
+import '../assets/deleted.mp3';
+import '../assets/added.mp3';
 
 // import 'materialize-css/dist/js/materialize';
-import { Modal } from 'materialize-css';
+
 // import 'materialize-css/js/buttons';
 // import 'materialize-css/js/modal';
 
@@ -55,7 +60,7 @@ const populateTables = (tables) => {
                     }</p>
                     <!--<div class="row">
                         <div class="col s12">
-                            <span class="material-icons right" class="task-delete-button" data-table="${key}" data-task="${taskKey}"> delete </span>
+                            <span class="material-icons right" class="task-delete-section" data-table="${key}" data-task="${taskKey}"> delete </span>
                         </div>
                     </div>-->
                 </div>`;
@@ -136,22 +141,12 @@ projectDoc.onSnapshot((doc) => {
   tables.forEach((table) => {
     new Sortable(table, {
       group: 'shared', // set both lists to same group
-      animation: 150,
+      //   animation: 150,
       onStart: async function () {
-        // document.querySelector('#task-delete-button').style.height = '200px';
-        // document.querySelector('#task-delete-button').style.width = '100vw';
+        document.querySelector('#task-delete-section').style.opacity = '1';
       },
-      //   setData: function (dataTransfer, dragEl) {
-      //     // Create the clone (with content)
-      //     dragGhost = dragEl.cloneNode(true);
-      //     // Stylize it
-      //     dragGhost.classList.add('hidden-drag-ghost');
-      //     // Place it into the DOM tree
-      //     document.body.appendChild(dragGhost);
-      //     // Set the new stylized "drag image" of the dragged element
-      //     dataTransfer.setDragImage(dragGhost, 0, 0);
-      //   },
       onEnd: async function (/**Event*/ evt) {
+        document.querySelector('#task-delete-section').style.opacity = '0';
         const from = evt.from.getAttribute('id');
         const to = evt.to.getAttribute('id');
         const taskId = evt.item.getAttribute('id');
@@ -159,7 +154,7 @@ projectDoc.onSnapshot((doc) => {
         //     ["taskTables."+from] :
         // })
 
-        if (to == 'task-delete-button') {
+        if (to == 'task-delete-section') {
           console.log('deleting');
           await projectDoc.update({
             ['taskTables.' + from + '.tasks']: _.omit(
@@ -168,8 +163,13 @@ projectDoc.onSnapshot((doc) => {
             ),
           });
           document
-            .querySelectorAll('#task-delete-button .task')
+            .querySelectorAll('#task-delete-section .task')
             .forEach((e) => e.parentNode.removeChild(e));
+          new Audio('../assets/deleted.mp3').play();
+          Toastify({
+            text: 'Task deleted!',
+            gravity: 'bottom',
+          }).showToast();
         } else {
           if (from != to) {
             await projectDoc.update({
@@ -189,7 +189,7 @@ projectDoc.onSnapshot((doc) => {
     });
   });
 
-  new Sortable(document.querySelector('#task-delete-button'), {
+  new Sortable(document.querySelector('#task-delete-section'), {
     group: 'shared',
   });
 
@@ -213,6 +213,12 @@ projectDoc.onSnapshot((doc) => {
           },
         },
       });
+
+      Toastify({
+        text: 'Task added!',
+        gravity: 'bottom',
+      }).showToast();
+      new Audio('../assets/added.mp3').play();
     });
   });
   const addTableForm = document.querySelector('#add-table-form');
@@ -239,7 +245,7 @@ projectDoc.onSnapshot((doc) => {
     });
   });
 
-  document.querySelectorAll('.task-delete-button').forEach((deleteButton) => {
+  document.querySelectorAll('.task-delete-section').forEach((deleteButton) => {
     deleteButton.addEventListener('click', async () => {
       const tableId = deleteButton.dataset.table;
       const taskId = deleteButton.dataset.task;
