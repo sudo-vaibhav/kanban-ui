@@ -3,6 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" href="/assets/favicon.svg" />
     <title>Document</title>
   </head>
   <body>
@@ -13,7 +14,9 @@
             <img src="/assets/kanban-logo.svg" alt="" />
           </a>
           <ul id="nav-mobile" class="right hide-on-med-and-down valign-wrapper">
-            <li><span class="material-icons"> notifications </span></li>
+            <li class="nav-item">
+              <span class="material-icons"> notifications </span>
+            </li>
           </ul>
         </div>
       </nav>
@@ -28,7 +31,7 @@
           </div>
           <div class="col s3">
             <a
-              class="btn-floating btn-large waves-effect waves-light right modal-trigger"
+              class="btn btn-floating btn-large waves-effect waves-light right modal-trigger"
               id="add-table"
               href="#add-table-modal"
               ><i class="material-icons">add</i></a
@@ -63,11 +66,10 @@
       </div>
     </form>
     <div id="add-table-modals-container"></div>
-    <!-- <div class="row">
-      <div class="col s3 offset-s9"> -->
-    <div id="task-delete-button">
+    <!-- This works dont touch it -->
+    <!-- <div id="task-delete-button">
       <a
-        class="btn-floating btn-large waves-effect waves-light fixed-action-btn right modal-trigger"
+        class="btn btn-floating btn-large waves-effect waves-light fixed-action-btn right modal-trigger"
         id="delete-task"
         style="
           position: fixed;
@@ -78,8 +80,6 @@
       >
         <i class="material-icons right"> delete </i>
       </a>
-    </div>
-    <!-- </div>
     </div> -->
   </body>
 </html>

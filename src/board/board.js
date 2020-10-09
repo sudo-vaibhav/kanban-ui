@@ -41,27 +41,28 @@ const populateTables = (tables) => {
             </div>
             <div class="row tasks-wrapper" id="${key}">
               ${Object.keys(tableData.tasks)
+                .sort()
                 .map((taskKey) => {
                   return `
-                <div class="col white task" id="${taskKey}">
-                    <div class="row priority-wrapper">
-                       <!-- <span class="white-text red badge left">Low Priority</span> -->
-
+                <div class="col white task" id="${taskKey}" style="padding-top:1rem;padding-bottom:1rem">
+                    <!-- <div class="row priority-wrapper">
+                       <span class="white-text red badge left">Low Priority</span> 
                     </div>
+                    -->
                     <h6 class="task-text">${tableData.tasks[taskKey].title}</h6>
-                    <span class="black-text text-lighten-4">${
+                    <p class="task-description">${
                       tableData.tasks[taskKey].description || ''
-                    }</span>
-                    <div class="row">
+                    }</p>
+                    <!--<div class="row">
                         <div class="col s12">
                             <span class="material-icons right" class="task-delete-button" data-table="${key}" data-task="${taskKey}"> delete </span>
                         </div>
-                    </div>
+                    </div>-->
                 </div>`;
                 })
                 .join('')}
             </div>
-            <a class="btn-floating btn-large waves-effect waves-light primary fixed-action-btn right modal-trigger" href="#add-task-modal-${key}">
+            <a class="btn btn-floating btn-large waves-effect waves-light primary fixed-action-btn right modal-trigger" href="#add-task-modal-${key}">
                 <i class="material-icons">add</i>
             </a>
         </div>

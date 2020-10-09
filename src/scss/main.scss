@@ -18,10 +18,12 @@ path {
   fill: $primary-color;
   stroke: $primary-color;
 }
-
-a.btn,
-a.btn:hover,
-a.btn:focus,
-a.btn:active {
-  background: $primary-color;
+a,
+button {
+  &.btn,
+  &.btn:hover,
+  &.btn:focus,
+  &.btn:active {
+    background: $primary-color;
+  }
 }
