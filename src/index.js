@@ -5,3 +5,29 @@ import './assets/ishita.png';
 import './assets/deepesh.jpeg';
 import './assets/aditya.jpeg';
 import './assets/vaibhav.jpg';
+import { db } from './main';
+
+window.addEventListener('DOMContentLoaded', () => {
+  M.AutoInit();
+  const startBoardForm = document.querySelector('#start-board-form');
+
+  startBoardForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const name = startBoardForm['board-name-input'].value;
+    const docRef = await db.collection('workspaces').add({
+      name,
+      taskTables: {
+        'About To Do': {
+          tasks: {},
+        },
+        Doing: {
+          tasks: {},
+        },
+        Done: {
+          tasks: {},
+        },
+      },
+    });
+    window.location.href = `/board?id=${docRef.id}`;
+  });
+});

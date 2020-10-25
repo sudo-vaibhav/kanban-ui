@@ -12,7 +12,7 @@
         <div class="row">
           <img src="/assets/kanban-logo.svg" id="kanban-logo" alt="" />
         </div>
-        <div class="row" id="hero-wrapper">
+        <div class="row" id="hero-wrapper" style="margin-bottom: 0">
           <div class="col s12 l7 ml-0" id="hero-image-container">
             <img src="/assets/kanban-hero.svg" alt="" />
           </div>
@@ -24,10 +24,12 @@
             </div>
             <div class="row">
               <div class="col s12 hero-link-wrapper">
-                <a class="btn-large" href="/board">Start a Board</a>
+                <a class="btn-large modal-trigger" href="#start-board-modal"
+                  >Start a Board</a
+                >
               </div>
               <div class="col s12 hero-link-wrapper valign-wrapper">
-                <a class="btn-large outline" href="#team">Meet the Team</a>
+                <a class="btn-large outline" href="/board">Join a Board</a>
               </div>
             </div>
           </div>
@@ -37,7 +39,7 @@
 
     <section id="team">
       <svg
-        id="curveDownColor"
+        id="curve"
         xmlns="http://www.w3.org/2000/svg"
         version="1.1"
         width="100%"
@@ -57,7 +59,6 @@
             <div class="card">
               <div class="card-image">
                 <img src="/assets/deepesh.jpeg" />
-                <!-- <span class="card-title">Card Title</span> -->
               </div>
               <div class="card-content">
                 <h5>Deepesh</h5>
@@ -99,5 +100,28 @@
         </div>
       </div>
     </section>
+    <form id="start-board-form">
+      <div id="start-board-modal" class="modal">
+        <div class="modal-content">
+          <h4>Start a Board</h4>
+
+          <div class="row">
+            <div class="input-field col s12">
+              <input
+                placeholder="Ex. HCI Project"
+                id="board-name-input"
+                type="text"
+                class="validate"
+                required
+              />
+              <label for="table-name-input">New Board Name</label>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn waves-effect waves-light">Add</button>
+        </div>
+      </div>
+    </form>
   </body>
 </html>

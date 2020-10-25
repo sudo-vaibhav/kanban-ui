@@ -15,7 +15,11 @@
           </a>
           <ul id="nav-mobile" class="right hide-on-med-and-down valign-wrapper">
             <li class="nav-item">
-              <span class="material-icons"> notifications </span>
+              <a
+                href="#invite-people-modal"
+                class="modal-trigger material-icons"
+                >share
+              </a>
             </li>
           </ul>
         </div>
@@ -55,6 +59,7 @@
                 id="table-name-input"
                 type="text"
                 class="validate"
+                required
               />
               <label for="table-name-input">New Table Name</label>
             </div>
@@ -66,21 +71,6 @@
       </div>
     </form>
     <div id="add-table-modals-container"></div>
-    <!-- This works dont touch it -->
-    <!-- <div id="task-delete-button">
-      <a
-        class="btn btn-floating btn-large waves-effect waves-light fixed-action-btn right modal-trigger"
-        id="delete-task"
-        style="
-          position: fixed;
-          bottom: 20px;
-          right: calc(2.5vw + 0.75rem);
-          z-index: 999;
-        "
-      >
-        <i class="material-icons right"> delete </i>
-      </a>
-    </div> -->
     <section id="task-delete-section">
       <svg
         id="bigHalfCircle"
@@ -97,5 +87,77 @@
         <h1>Drag here to delete</h1>
       </div>
     </section>
+
+    <div id="invite-people-modal" class="modal">
+      <div class="modal-content">
+        <h4>Invite More Collaborators</h4>
+        <div class="row">Copy Shareable Code</div>
+        <div
+          class="round grey lighten-3"
+          style="
+            padding: 1rem;
+            border-radius: 10px;
+            display: flex;
+            justify-content: space-between;
+          "
+        >
+          <div
+            class="row"
+            style="
+              margin: 0;
+              display: flex;
+              justify-content: space-around;
+              width: 100%;
+              align-items: center;
+            "
+          >
+            <div class="col" id="emoji-id-container"></div>
+            <div class="col" style="cursor: pointer" id="copy-code-button">
+              <svg
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+                fill="none"
+                width="24px"
+                height="29px"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"
+                ></path>
+              </svg>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn waves-effect waves-light modal-close">Close</button>
+      </div>
+    </div>
+
+    <form id="enter-code-form">
+      <div id="enter-code-modal" class="modal">
+        <div class="modal-content">
+          <h4>Enter Invite Code</h4>
+          <div class="row">
+            <div class="input-field col s12">
+              <input
+                placeholder="Emoji Invite Code"
+                type="text"
+                class="validate"
+                id="emoji-code-input"
+                required
+              />
+              <label for="emoji-code-input">Invite Code</label>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn waves-effect waves-light">Add</button>
+        </div>
+      </div>
+    </form>
   </body>
 </html>

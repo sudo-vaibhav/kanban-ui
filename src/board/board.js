@@ -2,25 +2,13 @@ import './board.scss';
 import Sortable from 'sortablejs';
 import _ from 'lodash';
 import { uuid } from 'uuidv4';
-import * as firebase from 'firebase/app';
-import 'firebase/firestore';
 import '../assets/kanban-logo.svg';
-import { Modal } from 'materialize-css';
 import Toastify from 'toastify-js';
 import 'toastify-js/src/toastify.css';
 import '../assets/deleted.mp3';
 import '../assets/added.mp3';
-
-// import 'materialize-css/dist/js/materialize';
-
-// import 'materialize-css/js/buttons';
-// import 'materialize-css/js/modal';
-
-// document.addEventListener('DOMContentLoaded', function () {
-//   var elems = document.querySelectorAll('.fixed-action-btn');
-//   var instances = M.FloatingActionButton.init(elems, options);
-// });
-let addTable = null;
+import { db } from '../main';
+import { decode, encode } from 'emoji-uuid';
 const populateTables = (tables) => {
   let tablesHTML = '';
   let modalsHTML = '';
@@ -36,10 +24,16 @@ const populateTables = (tables) => {
                     <h5>${key}</h5>
                 </div>
                 <div class="col s2">
-                    <a class='dropdown-trigger' href='#' data-target='dropdown-${key}'  style="display:flex; justify-content:center;align-items:center;">
+                    <a class='dropdown-trigger' href='#' data-target='dropdown-${key.replace(
+                      ' ',
+                      '-'
+                    )}'  style="display:flex; justify-content:center;align-items:center;">
                         <span class="material-icons black-text"> more_vert </span>
                     </a>
-                    <ul id='dropdown-${key}' class='dropdown-content'>
+                    <ul id='dropdown-${key.replace(
+                      ' ',
+                      '-'
+                    )}' class='dropdown-content'>
                         <li><a href="#!" data-delete="${key}" class="black-text delete-table-option" >Delete</a></li>
                     </ul>
                 </div>
@@ -50,19 +44,10 @@ const populateTables = (tables) => {
                 .map((taskKey) => {
                   return `
                 <div class="col white task" id="${taskKey}" style="padding-top:1rem;padding-bottom:1rem">
-                    <!-- <div class="row priority-wrapper">
-                       <span class="white-text red badge left">Low Priority</span> 
-                    </div>
-                    -->
                     <h6 class="task-text">${tableData.tasks[taskKey].title}</h6>
                     <p class="task-description">${
                       tableData.tasks[taskKey].description || ''
                     }</p>
-                    <!--<div class="row">
-                        <div class="col s12">
-                            <span class="material-icons right" class="task-delete-section" data-table="${key}" data-task="${taskKey}"> delete </span>
-                        </div>
-                    </div>-->
                 </div>`;
                 })
                 .join('')}
@@ -114,149 +99,166 @@ const populateTables = (tables) => {
   document.querySelector('#add-table-modals-container').innerHTML = modalsHTML;
 };
 
-firebase.initializeApp({
-  apiKey: 'AIzaSyD6TCMmeg1OCL4J1rgyIJk54H2Hu-KHVMo',
-  authDomain: 'kanban-work-manager-7ba68.firebaseapp.com',
-  databaseURL: 'https://kanban-work-manager-7ba68.firebaseio.com',
-  projectId: 'kanban-work-manager-7ba68',
-  storageBucket: 'kanban-work-manager-7ba68.appspot.com',
-  messagingSenderId: '439358102630',
-  appId: '1:439358102630:web:a24bd65e63d94181fa61a7',
-  measurementId: 'G-KJXQ957WKZ',
-});
-const db = firebase.firestore();
-const projectDoc = db.collection('workspaces').doc('zPNyKXAPTou0BZCNqBaZ');
+let modalRendered = false;
 
-projectDoc.onSnapshot((doc) => {
-  const data = doc.data();
-  console.log(data);
-  console.log(doc.id);
+const urlParams = new URLSearchParams(window.location.search);
+const boardId = urlParams.get('id');
 
-  document.querySelector('#project-heading').innerHTML = data.name;
-  populateTables(data.taskTables);
-  const tables = document.querySelectorAll(
-    '.kanban-table-container .tasks-wrapper'
+if (boardId === null) {
+  window.addEventListener('DOMContentLoaded', () => {
+    const enterCodeForm = document.querySelector('#enter-code-form');
+    enterCodeForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const emojiCode = enterCodeForm['emoji-code-input'].value;
+      const id = decode(emojiCode);
+      window.location.href = `/board?id=${id}`;
+    });
+  });
+  const enterCodeModal = M.Modal.init(
+    document.querySelector('#enter-code-modal')
   );
+  enterCodeModal.open();
+} else {
+  window.addEventListener('DOMContentLoaded', () => {
+    const copyCodeButton = document.querySelector('#copy-code-button');
+    document.querySelector('#emoji-id-container').innerHTML = encode(boardId);
+    copyCodeButton.addEventListener('click', async () => {
+      await window.navigator.clipboard.writeText(encode(boardId));
+      alert('Copied code to clipboard!');
+    });
+  });
+  const projectDoc = db.collection('workspaces').doc(boardId);
 
-  tables.forEach((table) => {
-    new Sortable(table, {
-      group: 'shared', // set both lists to same group
-      //   animation: 150,
-      onStart: async function () {
-        document.querySelector('#task-delete-section').style.opacity = '1';
-      },
-      onEnd: async function (/**Event*/ evt) {
-        document.querySelector('#task-delete-section').style.opacity = '0';
-        const from = evt.from.getAttribute('id');
-        const to = evt.to.getAttribute('id');
-        const taskId = evt.item.getAttribute('id');
-        //   projectDoc.update({
-        //     ["taskTables."+from] :
-        // })
+  projectDoc.onSnapshot((doc) => {
+    const data = doc.data();
+    document.querySelector('#project-heading').innerHTML = data.name;
+    populateTables(data.taskTables);
+    const tables = document.querySelectorAll(
+      '.kanban-table-container .tasks-wrapper'
+    );
 
-        if (to == 'task-delete-section') {
-          console.log('deleting');
-          await projectDoc.update({
-            ['taskTables.' + from + '.tasks']: _.omit(
-              data.taskTables[from].tasks,
-              taskId
-            ),
-          });
-          document
-            .querySelectorAll('#task-delete-section .task')
-            .forEach((e) => e.parentNode.removeChild(e));
-          new Audio('../assets/deleted.mp3').play();
-          Toastify({
-            text: 'Task deleted!',
-            gravity: 'bottom',
-          }).showToast();
-        } else {
-          if (from != to) {
+    tables.forEach((table) => {
+      new Sortable(table, {
+        group: 'shared', // set both lists to same group
+        onStart: async function () {
+          document.querySelector('#task-delete-section').style.opacity = '1';
+        },
+        onEnd: async function (/**Event*/ evt) {
+          document.querySelector('#task-delete-section').style.opacity = '0';
+          const from = evt.from.getAttribute('id');
+          const to = evt.to.getAttribute('id');
+          const taskId = evt.item.getAttribute('id');
+
+          if (to == 'task-delete-section') {
+            console.log('deleting');
             await projectDoc.update({
-              ['taskTables.' + to + '.tasks']: {
-                ...data.taskTables[to].tasks,
-                [uuid()]: data.taskTables[from].tasks[taskId],
-              },
-
               ['taskTables.' + from + '.tasks']: _.omit(
                 data.taskTables[from].tasks,
                 taskId
               ),
             });
+            document
+              .querySelectorAll('#task-delete-section .task')
+              .forEach((e) => e.parentNode.removeChild(e));
+            new Audio('../assets/deleted.mp3').play();
+            Toastify({
+              text: 'Task deleted!',
+              gravity: 'bottom',
+            }).showToast();
+          } else {
+            if (from != to) {
+              await projectDoc.update({
+                ['taskTables.' + to + '.tasks']: {
+                  ...data.taskTables[to].tasks,
+                  [uuid()]: data.taskTables[from].tasks[taskId],
+                },
+
+                ['taskTables.' + from + '.tasks']: _.omit(
+                  data.taskTables[from].tasks,
+                  taskId
+                ),
+              });
+            }
           }
-        }
-      },
+        },
+      });
     });
-  });
 
-  new Sortable(document.querySelector('#task-delete-section'), {
-    group: 'shared',
-  });
+    new Sortable(document.querySelector('#task-delete-section'), {
+      group: 'shared',
+    });
 
-  const elem = document.querySelector('#add-table-modal');
-  const instance = M.Modal.init(elem, {});
+    const addTaskForms = document.querySelectorAll('.add-task-form');
+    addTaskForms.forEach((addTaskForm) => {
+      addTaskForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const taskTableId = addTaskForm.querySelector('.table-id-text-input')
+          .value;
+        await projectDoc.update({
+          ['taskTables.' + taskTableId + '.tasks']: {
+            ...data.taskTables[taskTableId].tasks,
+            [uuid()]: {
+              title: addTaskForm.querySelector('.task-name-input').value,
+              description: addTaskForm.querySelector('.task-description-input')
+                .value,
+            },
+          },
+        });
 
-  const addTaskForms = document.querySelectorAll('.add-task-form');
-  addTaskForms.forEach((addTaskForm) => {
-    addTaskForm.addEventListener('submit', async (e) => {
+        Toastify({
+          text: 'Task added!',
+          gravity: 'bottom',
+        }).showToast();
+        new Audio('../assets/added.mp3').play();
+      });
+    });
+    const addTableForm = document.querySelector('#add-table-form');
+    addTableForm.addEventListener('submit', async (e) => {
       e.preventDefault();
-      console.log('submitted');
-      const taskTableId = addTaskForm.querySelector('.table-id-text-input')
-        .value;
+      const newTableName = addTableForm['table-name-input'].value;
+      console.log(newTableName);
+
       await projectDoc.update({
-        ['taskTables.' + taskTableId + '.tasks']: {
-          ...data.taskTables[taskTableId].tasks,
-          [uuid()]: {
-            title: addTaskForm.querySelector('.task-name-input').value,
-            description: addTaskForm.querySelector('.task-description-input')
-              .value,
+        taskTables: {
+          ...data.taskTables,
+          [newTableName]: {
+            tasks: {},
           },
         },
       });
-
-      Toastify({
-        text: 'Task added!',
-        gravity: 'bottom',
-      }).showToast();
-      new Audio('../assets/added.mp3').play();
     });
-  });
-  const addTableForm = document.querySelector('#add-table-form');
-  addTableForm.addEventListener('submit', async (e) => {
-    e.preventDefault();
-    const newTableName = addTableForm['table-name-input'].value;
-    console.log(newTableName);
-
-    await projectDoc.update({
-      taskTables: {
-        ...data.taskTables,
-        [newTableName]: {
-          tasks: {},
-        },
-      },
-    });
-  });
-  document.querySelectorAll('.delete-table-option').forEach((deleteOption) => {
-    deleteOption.addEventListener('click', async () => {
-      // console.log(deleteOption.dataset.delete);
-      await projectDoc.update({
-        taskTables: _.omit(data.taskTables, deleteOption.dataset.delete),
+    document
+      .querySelectorAll('.delete-table-option')
+      .forEach((deleteOption) => {
+        deleteOption.addEventListener('click', async () => {
+          await projectDoc.update({
+            taskTables: _.omit(data.taskTables, deleteOption.dataset.delete),
+          });
+        });
       });
-    });
-  });
 
-  document.querySelectorAll('.task-delete-section').forEach((deleteButton) => {
-    deleteButton.addEventListener('click', async () => {
-      const tableId = deleteButton.dataset.table;
-      const taskId = deleteButton.dataset.task;
-      console.log(tableId, taskId);
-      await projectDoc.update({
-        ['taskTables.' + tableId + '.tasks']: _.omit(
-          data.taskTables.tableId.tasks,
-          taskId
-        ),
+    document
+      .querySelectorAll('.task-delete-section')
+      .forEach((deleteButton) => {
+        deleteButton.addEventListener('click', async () => {
+          const tableId = deleteButton.dataset.table;
+          const taskId = deleteButton.dataset.task;
+          console.log(tableId, taskId);
+          await projectDoc.update({
+            ['taskTables.' + tableId + '.tasks']: _.omit(
+              data.taskTables.tableId.tasks,
+              taskId
+            ),
+          });
+        });
       });
-    });
+    M.AutoInit();
+    if (!modalRendered) {
+      const inviteModal = M.Modal.init(
+        document.querySelector('#invite-people-modal')
+      );
+      modalRendered = true;
+      inviteModal.open();
+    }
   });
-  M.AutoInit();
-});
+}
