@@ -31,7 +31,7 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: path.join(__dirname, '/src/board/index.ejs'),
       filename: path.join(__dirname, '/dist/board/index.html'),
-      chunk: ['board', 'main'],
+      chunks: ['board', 'main'],
     }),
   ],
 };
