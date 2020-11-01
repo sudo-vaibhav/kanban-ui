@@ -5,7 +5,6 @@ import { uuid } from 'uuidv4';
 import '../assets/kanban-logo.svg';
 import Toastify from 'toastify-js';
 import 'toastify-js/src/toastify.css';
-import '../assets/deleted.mp3';
 import '../assets/added.mp3';
 import { db } from '../main';
 import { decode, encode } from 'emoji-uuid';
@@ -162,7 +161,6 @@ if (boardId === null) {
               document
                 .querySelectorAll('#task-delete-section .task')
                 .forEach((e) => e.parentNode.removeChild(e));
-              new Audio('../assets/deleted.mp3').play();
               Toastify({
                 text: 'Task deleted!',
                 gravity: 'bottom',
@@ -212,8 +210,6 @@ if (boardId === null) {
             text: 'Task added!',
             gravity: 'bottom',
           }).showToast();
-
-          //   addedAudio.play();
         });
       });
       const addTableForm = document.querySelector('#add-table-form');
