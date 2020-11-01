@@ -9,6 +9,7 @@ import '../assets/deleted.mp3';
 import '../assets/added.mp3';
 import { db } from '../main';
 import { decode, encode } from 'emoji-uuid';
+const addedAudio = new Audio('../assets/added.mp3');
 const populateTables = (tables) => {
   let tablesHTML = '';
   let modalsHTML = '';
@@ -131,134 +132,141 @@ if (boardId === null) {
 
   projectDoc.onSnapshot((doc) => {
     const data = doc.data();
-    document.querySelector('#project-heading').innerHTML = data.name;
-    populateTables(data.taskTables);
-    const tables = document.querySelectorAll(
-      '.kanban-table-container .tasks-wrapper'
-    );
+    if (data) {
+      document.querySelector('#project-heading').innerHTML = data.name;
+      populateTables(data.taskTables);
+      const tables = document.querySelectorAll(
+        '.kanban-table-container .tasks-wrapper'
+      );
 
-    tables.forEach((table) => {
-      new Sortable(table, {
-        group: 'shared', // set both lists to same group
-        onStart: async function () {
-          document.querySelector('#task-delete-section').style.opacity = '1';
-        },
-        onEnd: async function (/**Event*/ evt) {
-          document.querySelector('#task-delete-section').style.opacity = '0';
-          const from = evt.from.getAttribute('id');
-          const to = evt.to.getAttribute('id');
-          const taskId = evt.item.getAttribute('id');
+      tables.forEach((table) => {
+        new Sortable(table, {
+          group: 'shared', // set both lists to same group
+          onStart: async function () {
+            document.querySelector('#task-delete-section').style.opacity = '1';
+          },
+          onEnd: async function (/**Event*/ evt) {
+            document.querySelector('#task-delete-section').style.opacity = '0';
+            const from = evt.from.getAttribute('id');
+            const to = evt.to.getAttribute('id');
+            const taskId = evt.item.getAttribute('id');
 
-          if (to == 'task-delete-section') {
-            console.log('deleting');
-            await projectDoc.update({
-              ['taskTables.' + from + '.tasks']: _.omit(
-                data.taskTables[from].tasks,
-                taskId
-              ),
-            });
-            document
-              .querySelectorAll('#task-delete-section .task')
-              .forEach((e) => e.parentNode.removeChild(e));
-            new Audio('../assets/deleted.mp3').play();
-            Toastify({
-              text: 'Task deleted!',
-              gravity: 'bottom',
-            }).showToast();
-          } else {
-            if (from != to) {
+            if (to == 'task-delete-section') {
+              console.log('deleting');
               await projectDoc.update({
-                ['taskTables.' + to + '.tasks']: {
-                  ...data.taskTables[to].tasks,
-                  [uuid()]: data.taskTables[from].tasks[taskId],
-                },
-
                 ['taskTables.' + from + '.tasks']: _.omit(
                   data.taskTables[from].tasks,
                   taskId
                 ),
               });
+              document
+                .querySelectorAll('#task-delete-section .task')
+                .forEach((e) => e.parentNode.removeChild(e));
+              new Audio('../assets/deleted.mp3').play();
+              Toastify({
+                text: 'Task deleted!',
+                gravity: 'bottom',
+              }).showToast();
+            } else {
+              if (from != to) {
+                await projectDoc.update({
+                  ['taskTables.' + to + '.tasks']: {
+                    ...data.taskTables[to].tasks,
+                    [uuid()]: data.taskTables[from].tasks[taskId],
+                  },
+
+                  ['taskTables.' + from + '.tasks']: _.omit(
+                    data.taskTables[from].tasks,
+                    taskId
+                  ),
+                });
+              }
             }
-          }
-        },
+          },
+        });
       });
-    });
 
-    new Sortable(document.querySelector('#task-delete-section'), {
-      group: 'shared',
-    });
+      new Sortable(document.querySelector('#task-delete-section'), {
+        group: 'shared',
+      });
 
-    const addTaskForms = document.querySelectorAll('.add-task-form');
-    addTaskForms.forEach((addTaskForm) => {
-      addTaskForm.addEventListener('submit', async (e) => {
+      const addTaskForms = document.querySelectorAll('.add-task-form');
+      addTaskForms.forEach((addTaskForm) => {
+        addTaskForm.addEventListener('submit', async (e) => {
+          e.preventDefault();
+          const taskTableId = addTaskForm.querySelector('.table-id-text-input')
+            .value;
+          await projectDoc.update({
+            ['taskTables.' + taskTableId + '.tasks']: {
+              ...data.taskTables[taskTableId].tasks,
+              [uuid()]: {
+                title: addTaskForm.querySelector('.task-name-input').value,
+                description: addTaskForm.querySelector(
+                  '.task-description-input'
+                ).value,
+              },
+            },
+          });
+
+          Toastify({
+            text: 'Task added!',
+            gravity: 'bottom',
+          }).showToast();
+
+          //   addedAudio.play();
+        });
+      });
+      const addTableForm = document.querySelector('#add-table-form');
+      addTableForm.addEventListener('submit', async (e) => {
         e.preventDefault();
-        const taskTableId = addTaskForm.querySelector('.table-id-text-input')
-          .value;
+        const newTableName = addTableForm['table-name-input'].value;
+        console.log(newTableName);
+
         await projectDoc.update({
-          ['taskTables.' + taskTableId + '.tasks']: {
-            ...data.taskTables[taskTableId].tasks,
-            [uuid()]: {
-              title: addTaskForm.querySelector('.task-name-input').value,
-              description: addTaskForm.querySelector('.task-description-input')
-                .value,
+          taskTables: {
+            ...data.taskTables,
+            [newTableName]: {
+              tasks: {},
             },
           },
         });
-
-        Toastify({
-          text: 'Task added!',
-          gravity: 'bottom',
-        }).showToast();
-        new Audio('../assets/added.mp3').play();
       });
-    });
-    const addTableForm = document.querySelector('#add-table-form');
-    addTableForm.addEventListener('submit', async (e) => {
-      e.preventDefault();
-      const newTableName = addTableForm['table-name-input'].value;
-      console.log(newTableName);
-
-      await projectDoc.update({
-        taskTables: {
-          ...data.taskTables,
-          [newTableName]: {
-            tasks: {},
-          },
-        },
-      });
-    });
-    document
-      .querySelectorAll('.delete-table-option')
-      .forEach((deleteOption) => {
-        deleteOption.addEventListener('click', async () => {
-          await projectDoc.update({
-            taskTables: _.omit(data.taskTables, deleteOption.dataset.delete),
+      document
+        .querySelectorAll('.delete-table-option')
+        .forEach((deleteOption) => {
+          deleteOption.addEventListener('click', async () => {
+            await projectDoc.update({
+              taskTables: _.omit(data.taskTables, deleteOption.dataset.delete),
+            });
           });
         });
-      });
 
-    document
-      .querySelectorAll('.task-delete-section')
-      .forEach((deleteButton) => {
-        deleteButton.addEventListener('click', async () => {
-          const tableId = deleteButton.dataset.table;
-          const taskId = deleteButton.dataset.task;
-          console.log(tableId, taskId);
-          await projectDoc.update({
-            ['taskTables.' + tableId + '.tasks']: _.omit(
-              data.taskTables.tableId.tasks,
-              taskId
-            ),
+      document
+        .querySelectorAll('.task-delete-section')
+        .forEach((deleteButton) => {
+          deleteButton.addEventListener('click', async () => {
+            const tableId = deleteButton.dataset.table;
+            const taskId = deleteButton.dataset.task;
+            console.log(tableId, taskId);
+            await projectDoc.update({
+              ['taskTables.' + tableId + '.tasks']: _.omit(
+                data.taskTables.tableId.tasks,
+                taskId
+              ),
+            });
           });
         });
-      });
-    M.AutoInit();
-    if (!modalRendered) {
-      const inviteModal = M.Modal.init(
-        document.querySelector('#invite-people-modal')
-      );
-      modalRendered = true;
-      inviteModal.open();
+      addedAudio.play();
+      M.AutoInit();
+      if (!modalRendered) {
+        const inviteModal = M.Modal.init(
+          document.querySelector('#invite-people-modal')
+        );
+        modalRendered = true;
+        inviteModal.open();
+      }
+    } else {
+      window.location.href = '/';
     }
   });
 }

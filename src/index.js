@@ -5,8 +5,12 @@ import './assets/ishita.png';
 import './assets/deepesh.jpeg';
 import './assets/aditya.jpeg';
 import './assets/vaibhav.jpg';
+require.context('./assets', true, /^image_.+\.png/);
 import { db } from './main';
+import AOS from 'aos';
+import 'aos/src/sass/aos.scss';
 
+AOS.init();
 window.addEventListener('DOMContentLoaded', () => {
   M.AutoInit();
   const startBoardForm = document.querySelector('#start-board-form');

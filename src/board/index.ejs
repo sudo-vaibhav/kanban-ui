@@ -92,45 +92,26 @@
       <div class="modal-content">
         <h4>Invite More Collaborators</h4>
         <div class="row">Copy Shareable Code</div>
-        <div
+        <span
           class="round grey lighten-3"
+          onclick="(e)=>e.target.style.background='green'"
           style="
             padding: 1rem;
             border-radius: 10px;
             display: flex;
-            justify-content: space-between;
+            margin: auto;
+            justify-content: center;
+            align-items: center;
           "
         >
-          <div
-            class="row"
-            style="
-              margin: 0;
-              display: flex;
-              justify-content: space-around;
-              width: 100%;
-              align-items: center;
-            "
+          <span id="emoji-id-container"></span>
+          <i
+            style="cursor: pointer; color: #888fdc; padding-left: 1rem"
+            id="copy-code-button"
+            class="material-icons"
+            >content_copy</i
           >
-            <div class="col" id="emoji-id-container"></div>
-            <div class="col" style="cursor: pointer" id="copy-code-button">
-              <svg
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-                fill="none"
-                width="24px"
-                height="29px"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"
-                ></path>
-              </svg>
-            </div>
-          </div>
-        </div>
+        </span>
       </div>
       <div class="modal-footer">
         <button class="btn waves-effect waves-light modal-close">Close</button>
