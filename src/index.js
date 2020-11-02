@@ -24,7 +24,21 @@ window.addEventListener('DOMContentLoaded', () => {
       name,
       taskTables: {
         'About To Do': {
-          tasks: {},
+          tasks: {
+            '0ccdcfa4-9b4b-4cfe-8439-5a02771f00ae': {
+              title: 'Create Google Adwords Campaign',
+              description:
+                'create separate headers for new launches and popular products',
+            },
+            '0ccdcfa4-9b4b-4cfe-8439-5a02771f00ty': {
+              title: 'Buy new furniture for office',
+              description: 'Make sure to get the bean bags',
+            },
+            '0ccdcfa4-9b4b-4cfe-8439-5a02771f01er': {
+              title: 'Finish Integrating Changes',
+              description: 'This is highly crucial for shipping on time',
+            },
+          },
         },
         Doing: {
           tasks: {},

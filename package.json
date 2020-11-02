@@ -21,7 +21,7 @@
   "homepage": "https://github.com/Sanchitbajaj02/kanban-ui#readme",
   "dependencies": {
     "aos": "^2.3.4",
-    "emoji-uuid": "^1.0.5",
+    "emoji-uuid": "^1.0.6",
     "firebase": "^7.22.0",
     "lodash": "^4.17.20",
     "materialize-css": "^1.0.0-rc.2",

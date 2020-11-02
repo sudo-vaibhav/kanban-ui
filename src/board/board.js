@@ -121,10 +121,15 @@ if (boardId === null) {
 } else {
   window.addEventListener('DOMContentLoaded', () => {
     const copyCodeButton = document.querySelector('#copy-code-button');
+    const shareCodeContainer = document.querySelector('#share-code-container');
     document.querySelector('#emoji-id-container').innerHTML = encode(boardId);
     copyCodeButton.addEventListener('click', async () => {
       await window.navigator.clipboard.writeText(encode(boardId));
-      alert('Copied code to clipboard!');
+      shareCodeContainer.style.backgroundColor = '#D0F0C0';
+      // alert('Copied code to clipboard!');
+      setTimeout(() => {
+        shareCodeContainer.style.backgroundColor = '#eee';
+      }, 3000);
     });
   });
   const projectDoc = db.collection('workspaces').doc(boardId);

@@ -10,6 +10,15 @@ $button-floating-background: $primary-color;
   margin: auto;
 }
 
+#share-code-container {
+  padding: 1rem;
+  border-radius: 10px;
+  display: flex;
+  margin: auto;
+  justify-content: center;
+  align-items: center;
+  background-color: #eee;
+}
 .mt-5 {
   margin-top: 1.25rem;
 }
