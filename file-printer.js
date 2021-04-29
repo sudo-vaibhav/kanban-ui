@@ -20,10 +20,16 @@ function fromDir(startPath, filter) {
   for (var i = 0; i < files.length; i++) {
     var filename = path.join(startPath, files[i])
     var stat = fs.lstatSync(filename)
-    if (stat.isDirectory() && filename !== 'node_modules') {
+    if (
+      stat.isDirectory() &&
+      filename !== 'node_modules' &&
+      filename !== 'dist'
+    ) {
       fromDir(filename, filter) //recurse
     } else if (
-      filename.indexOf(filter) >= 0 &&
+      filter.some((e) => {
+        return filename.indexOf(e) >= 0
+      }) &&
       filename !== 'file-printer.js' &&
       filename !== 'package-lock.json'
     ) {
@@ -33,7 +39,7 @@ function fromDir(startPath, filter) {
   }
 }
 
-fromDir('./', '.js')
+fromDir('./', ['.js', '.scss', '.ejs'])
 console.log(ans)
 
 pbcopy(ans)
